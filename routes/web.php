@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::prefix('/roles')->group(function() {
+    Route::get('/crear', function(){
+        return view('fragments.roles');
+    });
+
+    Route::post('/save', [RoleController::class, 'store'])->name('save_roles');
 });
