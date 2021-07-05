@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 class Account extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -19,10 +17,14 @@ class Account extends Authenticatable
         'firstname',
         'lastname',
         'email',
-        'role_id'
     ];
 
     protected $hidden = [
         'password',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id_role');
+    }
 }

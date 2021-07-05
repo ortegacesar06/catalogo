@@ -14,4 +14,9 @@ class Role extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
 }
