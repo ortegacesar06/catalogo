@@ -15,6 +15,9 @@
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <div class="d-grid gap-2">
+                                <a href="/perfil" class="btn btn-primary">Mi Perfil</a>
+                            </div>
+                            <div class="d-grid gap-2 mt-1">
                                 <button class="btn btn-danger" type="submit">Cerrar sesión</button>
                             </div>
                         </form>

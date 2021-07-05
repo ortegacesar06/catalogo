@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,10 +38,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', function () {
             return view('fragments.admin.index');
         });
-    });   
+    });
 });
 
-    
+Route::get('/perfil',function() {
+    return view('fragments.profile.profile');
+});
+
 // RUTAS DE PRUEBA
 Route::prefix('/roles')->group(function() {
     // RUTAS DE VISTAS
@@ -50,4 +54,5 @@ Route::prefix('/roles')->group(function() {
 
     // RUTAS DE FUNCIONES
     Route::post('/save', [RoleController::class, 'store'])->name('save_roles');
-}); 
+});
+
