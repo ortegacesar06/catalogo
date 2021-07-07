@@ -3,57 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function showAddUser()
     {
-        //
+        $roles['roles'] = Role::all();
+        return view('fragments.auth.register', $roles)
+                ->with('name', 'Agregar Usuario')
+                ->with('isAdmin', true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function allUsers()
     {
-        //
+        $accounts['accounts'] = Account::paginate(6);
+        return view('fragments.users.users', $accounts);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $account = new Account;
-        $account->firstname = $request->firstname;
-        $account->lastname = $request->lastname;
-        $account->email = $request->email;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Account  $account
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Account $account)
-    {
-        //
-        $accounts = Account::all(function($users) {
-            return $users;
-        });
-    }
 
     /**
      * Show the form for editing the specified resource.

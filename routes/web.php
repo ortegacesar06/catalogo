@@ -34,10 +34,13 @@ Route::prefix('/auth')->group(function(){
 
 Route::middleware(['auth'])->group(function () {
     // RUTAS DEL ADMINISTRADOR
-    Route::prefix('/admin')->group(function(){
+    Route::prefix('/admin')->group(function() {
         Route::get('/', function () {
             return view('fragments.admin.index');
         });
+        //CRUD Usuarios
+        Route::get('/users',  [UserController::class, 'allUsers']);
+        Route::get('/create-user', [UserController::class,'showAddUser']);
     });
 });
 
@@ -55,4 +58,3 @@ Route::prefix('/roles')->group(function() {
     // RUTAS DE FUNCIONES
     Route::post('/save', [RoleController::class, 'store'])->name('save_roles');
 });
-

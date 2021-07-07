@@ -22,7 +22,9 @@ class LoginController extends Controller
 
     public function showRegister()
     {
-        return view('fragments.auth.register');
+        return view('fragments.auth.register')
+            ->with('name', 'Formulario de Registro')
+            ->with('isAdmin', false);
     }
 
     public function login(Request $request)
@@ -53,7 +55,7 @@ class LoginController extends Controller
             'password' => 'required',
             'confirm_password' => 'required|same:password'
         ]);
-        
+
 
         if($validated){
             $role = Role::where('name','visitor')->first();
@@ -65,16 +67,24 @@ class LoginController extends Controller
                 $account->lastname = $request->lastname;
                 $account->email = $request->email;
                 $account->password = Hash::make($request->password);
-                $account->role_id = $role->id_role;
+                if ($request->role) {
+                    $account->role_id = $request->role;
+                }else {
+                    $account->role_id = $role->id_role;
+                }
+
 
                 if($account->save()){
+                    if ($request->role) {
+                        return redirect('/admin/users')->with('success', 'La cuenta ha sido generada exitosamente.');
+                    }
                     return redirect('/login')->with('success', 'La cuenta ha sido generada exitosamente. Inicie sesión para continuar.');
                 }
 
                 return back()->with('error', 'Ha ocurrido un error al guardar los datos.');
-                
+
             }
-            
+
             return back()->with('error', 'No existen roles en el sistema.');
         }
 
