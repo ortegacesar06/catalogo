@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +61,23 @@ Route::prefix('/roles')->group(function() {
     // RUTAS DE FUNCIONES
     Route::post('/save', [RoleController::class, 'store'])->name('save_roles');
 });
+
+
+// RUTAS DE Cartegoria
+Route::resource('category', CategoryController::class);
+
+Route::prefix('/categories')->group(function() {
+
+    Route::get('/user', [CategoryController::class, 'show'])->name('user_category');
+});
+
+/*Route::prefix('/category')->group(function() {
+    // RUTAS DE VISTAS
+    Route::get('/', [CategoryController::class, 'index'])->name('home');
+    Route::get('/crear', function(){
+        return view('fragments.category.create');
+    });
+
+    // RUTAS DE FUNCIONES
+    Route::post('/save', [CategoryController::class, 'store'])->name('save_category');
+}); */
