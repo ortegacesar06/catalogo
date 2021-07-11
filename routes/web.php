@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,16 @@ Route::prefix('/roles')->group(function() {
     Route::post('/save', [RoleController::class, 'store'])->name('save_roles');
 });
 
+// RUTAS DE PRODUCTOS
+Route::prefix('/productos')->group(function() {
+    // RUTAS DE VISTAS
+    Route::get('/crear', function(){
+        return view('fragments.product.create');
+    });
+    
+    // RUTAS DE FUNCIONES
+    Route::post('/save', [ProductController::class, 'store'])->name('save_products');
+});
 
 // RUTAS DE Cartegoria
 Route::resource('category', CategoryController::class);
