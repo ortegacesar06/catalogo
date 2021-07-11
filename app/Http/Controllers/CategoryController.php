@@ -36,7 +36,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+    
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -56,7 +56,6 @@ class CategoryController extends Controller
                 $dataCategory['image_path']=$request->file('image_path')->store('uploads', ['disk' => 'public']);
             }
             Category::insert($dataCategory);
-            //return response()->json($dataCategory);
             return redirect('category/')->with('success', 'Se ha guardado el objeto.');
         }
         return redirect()->back()->withErrors($validated)->withInput();
