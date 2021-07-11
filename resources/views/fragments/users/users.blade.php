@@ -31,7 +31,7 @@
                 <td>{{ $account->lastname }}</td>
                 <td>{{ $account->email }}</td>
                 <td>
-                    <a href="#" class="btn btn-primary">Editar</a>
+                    <a href="/admin/edit-user/{{$account->id_account}}" class="btn btn-primary">Editar</a>
                     <a href="#" class="btn btn-danger">Eliminar</a>
                 </td>
             </tr>

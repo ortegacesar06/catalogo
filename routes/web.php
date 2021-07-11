@@ -39,8 +39,10 @@ Route::middleware(['auth'])->group(function () {
             return view('fragments.admin.index');
         });
         //CRUD Usuarios
-        Route::get('/users',  [UserController::class, 'allUsers']);
+        Route::get('/users', [UserController::class, 'allUsers']);
         Route::get('/create-user', [UserController::class,'showAddUser']);
+        Route::get('/edit-user/{id_user}', [UserController::class,'showEditUser']);
+        Route::post('/update-user/{id_user}', [UserController::class, 'updateUser']);
     });
 });
 

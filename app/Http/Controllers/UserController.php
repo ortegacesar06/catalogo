@@ -29,9 +29,10 @@ class UserController extends Controller
      * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function edit(Account $account)
+    public function showEditUser($id)
     {
-        //
+        $user = Account::findOrFail($id);
+        return view('fragments.users.edit',compact('user'));
     }
 
     /**
@@ -41,9 +42,9 @@ class UserController extends Controller
      * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Account $account)
+    public function updateUser( Request $request, Account $account)
     {
-        //
+
     }
 
     /**
