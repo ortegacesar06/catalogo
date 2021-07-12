@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body px-5 py-5">
                     <h4 class="text-center mb-4">Editar Información del Usuario</h4>
-                    <form action="{{ route('admin/update-user/'.$user->id_account) }}" method="post">
+                    <form action="{{ url('admin/update-user/'.$user->id_account) }}" method="post">
                         @csrf
                         <div class="form-floating mb-3">
                             <input type="text" name="firstname"
