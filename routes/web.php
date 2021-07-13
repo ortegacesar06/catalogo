@@ -44,7 +44,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users', [UserController::class, 'allUsers']);
         Route::get('/create-user', [UserController::class,'showAddUser']);
         Route::get('/edit-user/{id_user}', [UserController::class,'showEditUser']);
-        Route::post('/update-user/{id_user}', [UserController::class, 'updateUser']);
+        Route::put('/update-user/{id_user}', [UserController::class, 'updateUser']);
+        Route::put('/update-password/{id_user}',[UserController::class, 'updatePassword']);
+        Route::delete('delete/{id_user}', [UserController::class, 'destroyUser']);
     });
 });
 
@@ -69,7 +71,7 @@ Route::prefix('/productos')->group(function() {
     Route::get('/crear', function(){
         return view('fragments.product.create');
     });
-    
+
     // RUTAS DE FUNCIONES
     Route::post('/save', [ProductController::class, 'store'])->name('save_products');
 });
