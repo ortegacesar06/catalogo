@@ -8,11 +8,12 @@
                 <div class="card">
                     <div class="card-body px-5 py-5">
                         <h4 class="text-center mb-4">Formulario de Registro de Productos</h4>
-                        @include('fragments.product.form')
+                        <form action="{{ route('save_products') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @include('fragments.product.form')
 
-
-
-                        </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

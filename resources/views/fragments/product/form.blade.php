@@ -1,5 +1,4 @@
-<form action="{{ route('save_products') }}" method="post" enctype="multipart/form-data">
-    @csrf
+
     <div class="form-floating mb-3">
         <input 
             type="text" 
@@ -7,7 +6,7 @@
             class="form-control @error('name') is-invalid @enderror" 
             id="name_input"
             placeholder="Nombre"
-            value="{{ old('name') }}"
+            value="{{ isset($product->name)?$product->name:old('name') }}"
         >
         <label for="firstname_input">Nombre</label>
         @error('name')
@@ -24,7 +23,7 @@
             class="form-control @error('description') is-invalid @enderror" 
             id="description_input"
             placeholder="Descripción"
-            value="{{ old('description') }}"
+            value="{{ isset($product->description)?$product->description:old('description') }}"
         >
         <label for="description_input">Descripción</label>
         @error('description')
@@ -37,14 +36,14 @@
     <div class="form-floating mb-3">
         <input 
             type="text" 
-            name="type" 
-            class="form-control @error('type') is-invalid @enderror" 
-            id="type_input"
-            placeholder="Tipo"
-            value="{{ old('description') }}"
+            name="stock" 
+            class="form-control @error('stock') is-invalid @enderror" 
+            id="stock_input"
+            placeholder="Stock"
+            value="{{ isset($product->stock)?$product->stock:old('stock') }}"
         >
-        <label for="type_input">Tipo</label>
-        @error('type')
+        <label for="stock_input">Stock</label>
+        @error('stock')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
@@ -58,7 +57,7 @@
             class="form-control @error('price') is-invalid @enderror" 
             id="price_input"
             placeholder="Precio"
-            value="{{ old('price') }}"
+            value="{{ isset($product->price)?$product->price:old('price') }}"
         >
         <label for="price_input">Precio</label>
         @error('price')
@@ -74,45 +73,28 @@
         <input 
             class="form-control" 
             type="file" 
-            name="imagenProducto" 
+            name="image_path" 
             id="image_input"
-            value="{{ old('image_path') }}">
+            value="{{ isset($product->imagen_path)?$product->imagen_path:old('stock') }}"
         
         <img class="img-thumbnail" src="" alt="">
     </div>
-</div>
-<div class="form-floating mb-3">
-    <input 
-        type="text" 
-        name="account" 
-        class="form-control @error('price') is-invalid @enderror" 
-        id="account_input"
-        placeholder="Account"
-        value="{{ old('price') }}"
-    >
-    <label for="account_input">Cuenta</label>
-    @error('account')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-    @enderror</div>
-    <div class="form-floating mb-3">
-        <input 
-            type="text" 
-            name="category" 
-            class="form-control @error('category') is-invalid @enderror" 
-            id="category_input"
-            placeholder="category"
-            value="{{ old('price') }}"
-        >
+    <div class="form-group mb-3">
         <label for="category_input">Categoria</label>
+        <select name="category" id="category" class="form-control @error('category') is-invalid @enderror">
+            <option value="">Selecciona una categoría</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id_category }}" {{ isset($product) ? ($category->id_category === $product->category_id ? 'selected':''):'' }}>{{ $category->name }}</option>
+            @endforeach
+        </select>
         @error('category')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
         @enderror
+    </div>
+
     <div class="d-grid gap-2">
-        <button class="btn btn-primary" type="submit">Registrar</button>
+        <button class="btn btn-primary" type="submit">Guardar datos</button>
         <a href="{{ url('product/create')}}" class="btn btn-secondary">Regresar</a>
     </div>
-</form>
