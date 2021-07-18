@@ -4,32 +4,33 @@
         <div class="row justify-content-center">
          <div class="col-11 pt-5 pb-5">
         
-                <h2 class="section-heading text-uppercase text-center">Lista de Categorias</h2>
+                <h2 class="section-heading text-uppercase text-center">Lista de Catalogos</h2>
 
-                <a href="{{ route('category.create') }}" class="btn btn-primary">Crear Nueva Categoría</a>
+                <a href="{{ route('catalog.create') }}" class="btn btn-primary">Crear Nueva Catálogo</a>
         
                 <table class="table table-light">
                     <thead class="thead-light">
                         <tr>
                             <th>#</th>
+                            <th>Imagen</th>
                             <th>Nombre</th>
-                            <th>Catálogo</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach( $categories as $category )
+                        @foreach( $catalogs as $catalog )
                         <tr>
-                            <td>{{ $category->id_category }}</td>
+                            <td>{{ $catalog->id_catalog }}</td>
 
-                  
-                            <td>{{$category->name }}</td>
-                            <td>{{$category->catalog_id }}</td>
+                            <td>
+                            <img class="img-thumbnail img-fluid" src="{{ asset('storage').'/'.$catalog->image_path }}" width="200"  height="200" alt="">
+                            </td>
+                            <td>{{$catalog->name }}</td>
                     
                             <td>
-                            <a href="{{ url('/category/'.$category->id_category.'/edit') }}"class="btn btn-warning" >   Editar</a>
+                            <a href="{{ url('/catalog/'.$catalog->id_catalog.'/edit') }}"class="btn btn-warning" >   Editar</a>
                             | 
-                            <form action="{{ url('/category/'.$category->id_category) }}" class="d-inline" method="post">
+                            <form action="{{ url('/catalog/'.$catalog->id_catalog) }}" class="d-inline" method="post">
                             @csrf
                             {{ method_field('DELETE') }}
                             <input class="btn btn-danger" type="submit" onclick="return confirm('¿Quieres borrar?')" value="Borrar">
@@ -41,6 +42,7 @@
                     </tbody>
                     
                 </table>
+                
                 
 
             </div>
