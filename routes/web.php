@@ -66,10 +66,16 @@ Route::prefix('/roles')->group(function() {
 // RUTAS DE PRODUCTOS
 Route::prefix('/productos')->group(function() {
     // RUTAS DE VISTAS
-    Route::get('/crear', function(){
-        return view('fragments.product.create');
-    });
-    
+    Route::get('/crear', [ProductController::class, 'create']);
+
+    Route::get('/user', [ProductController::class, 'show']);
+
+    Route::get('/', [ProductController::class, 'index']);
+
+    Route::get('{id_product}/editP', [ProductController::class, 'edit']);
+    Route::patch('/{id_product}', [ProductController::class, 'update']);
+    //Route::post('/listUser', [ProductController::class, 'destroy']);
+    Route::delete('/{id_product}', [ProductController::class, 'destroy']);
     // RUTAS DE FUNCIONES
     Route::post('/save', [ProductController::class, 'store'])->name('save_products');
 });

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -14,7 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $data['products']=Product::all();
+        return view('fragments.product.listUser', $data);
     }
 
     /**
@@ -24,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::select(['id_category','name'])->get();
+        return view('fragments.product.create', ['categories' => $categories]);
     }
 
     /**
@@ -38,15 +42,17 @@ class ProductController extends Controller
         $product = new Product;
         $product->name = $request->name;
         $product->description = $request->description;
-        $product->type = $request->type;
+        $product->stock = $request->stock;
         $product->price = $request->price;
+
+        $product->category_id = $request->category;
         
         $path = $request->file('imagenProducto')->store('uploads',['disk'=>'public']);
         $product->image_path = $path;
 
-        //$product->account = $request->account;
-        //$product->category = $request->category;
         $product->save();
+
+        return redirect('productos/crear')->with('success', 'El producto se ha creado correctamente.');
     }
 
     /**
@@ -57,7 +63,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $data['products']=Product::all();
+        //Acceder vista
+        return view('fragments.product.userView', $data);
     }
 
     /**
@@ -66,9 +74,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id_product)
     {
-        //
+        $product=Product::where('id_product','=',$id_product)->firstOrFail();
+        $categories = Category::select(['id_category','name'])->get();
+
+        return view('fragments.product.editP', ['product' => $product, 'categories' => $categories]);
     }
 
     /**
@@ -78,9 +89,36 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id_product)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'stock' => 'required',
+            'price' => 'required',
+            'image_path' => 'required|max:10000|mimes:jpeg,png,jpg,webp',
+            'category' => 'required',
+        ]);
+
+        if($validated)
+        {
+            $dataCategory = request()->except(['_token', '_method']); 
+            $product= Product::findOrFail($id_product);
+
+            if($request->hasFile('image_path')){
+                Storage::delete( 'public/'.$product->image_path);
+                $dataCategory['image_path']=$request->file('image_path')->store('uploads', ['disk' => 'public']);
+            }
+
+            $product->fill($dataCategory);
+            $product->save();
+
+            //Product::where('id_product', '=', $id_product)->update($dataCategory);            
+            //return view('fragments.category.edit', compact('category'));
+
+            return redirect()->back()->with('success','El objeto fue editado correctamente.');
+        }
+        return redirect()->back()->withErrors($validated)->withInput();
     }
 
     /**
@@ -89,8 +127,19 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id_product)
     {
-        //
+        $product = Product::findOrFail($id_product);
+        if(Storage::delete( 'public/'.$product->image_path)){
+            if($product->delete()){
+        
+                return redirect('productos/listUser/')->with('success', 'Se ha borrado el objeto');
+
+            }else{                
+                return redirect('productos/listUser/')->with('error', 'No se ha borrado el objeto');
+            }
+        }else{
+            return redirect('productos/listUser/')->with('error', 'Error al borrar la imagen del producto.');
+        }        
     }
 }
