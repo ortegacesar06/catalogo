@@ -18,9 +18,24 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-// RUTAS DE VISTAS
+// RUTAS DEL CATÁLOGO
 Route::get('/', function () {
-    return view('welcome');
+    return view('fragments.shop.index');
+});
+Route::get('/producto', function () {
+    return view('fragments.shop.product');
+});
+Route::get('/catalogo', function () {
+    return view('fragments.shop.catalogue');
+});
+Route::get('/catalogo/productos', function () {
+    return view('fragments.shop.productos');
+});
+Route::get('/carrito', function () {
+    return view('fragments.shop.cart');
+});
+Route::get('/contacto', function () {
+    return view('fragments.shop.contact');
 });
 
 // RUTAS DE LAS VISTAS DE AUTENTICACION
