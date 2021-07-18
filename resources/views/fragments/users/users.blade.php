@@ -32,7 +32,11 @@
                 <td>{{ $account->email }}</td>
                 <td>
                     <a href="/admin/edit-user/{{$account->id_account}}" class="btn btn-primary">Editar</a>
-                    <a href="#" class="btn btn-danger">Eliminar</a>
+                    <form action="{{ url('/admin/delete/'.$account->id_account) }}" method="post">
+                        @csrf
+                        {{ method_field('DELETE') }}
+                        <input type="submit" class="btn btn-danger" onclick="return confirm('¿Deseas eliminar el usuario?')" value="Eliminar">
+                    </form>
                 </td>
             </tr>
             @endforeach

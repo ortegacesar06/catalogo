@@ -51,6 +51,9 @@ class LoginController extends Controller
         $validated = $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
+            'dni' => ' required',
+            'address' => 'required',
+            'phone' => 'required',
             'email' => 'email:rfc,dns|required|unique:accounts',
             'password' => 'required',
             'confirm_password' => 'required|same:password'
@@ -66,6 +69,9 @@ class LoginController extends Controller
                 $account->firstname = $request->firstname;
                 $account->lastname = $request->lastname;
                 $account->email = $request->email;
+                $account->dni = $request->dni;
+                $account->address = $request->address;
+                $account->phone = $request->phone;
                 $account->password = Hash::make($request->password);
                 if ($request->role) {
                     $account->role_id = $request->role;

@@ -17,6 +17,9 @@ class Account extends Authenticatable
         'firstname',
         'lastname',
         'email',
+        'dni',
+        'phone',
+        'address'
     ];
 
     protected $hidden = [

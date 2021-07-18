@@ -11,6 +11,17 @@
                     <form action="{{ route('register') }}" method="post">
                         @csrf
                         <div class="form-floating mb-3">
+                            <input type="number" name="dni"
+                                class="form-control @error('dni') is-invalid @enderror" id="dni_input"
+                                placeholder="Número de Cédula" value="{{ old('dni') }}">
+                            <label for="firstname_input">Cédula</label>
+                            @error('dni')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-3">
                             <input type="text" name="firstname"
                                 class="form-control @error('firstname') is-invalid @enderror" id="firstname_input"
                                 placeholder="Nombres" value="{{ old('firstname') }}">
@@ -27,6 +38,26 @@
                                 placeholder="Apellidos" value="{{ old('lastname') }}">
                             <label for="lastname_input">Apellidos</label>
                             @error('lastname')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="address" class="form-control @error('address') is-invalid @enderror"
+                                id="address_input" placeholder="Dirección" value="{{ old('address') }}">
+                            <label for="address_input">Dirección</label>
+                            @error('address')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
+                                id="phone_input" placeholder="Número Telefónico" value="{{ old('phone') }}">
+                            <label for="phone_input">Número Telefónico</label>
+                            @error('phone')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
