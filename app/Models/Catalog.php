@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Catalog extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'id_category';
+    protected $primaryKey = 'id_catalog';
 
     protected $fillable = [
         'name',
-        'catalog_id',
-        
-        
+        'image_path',
     ];
 
 

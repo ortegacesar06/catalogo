@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Catalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,11 +19,10 @@ class CategoryController extends Controller
         //
         //Visualizar información en paginas
        $data['categories']=Category::all();
+       
         //Acceder vista
         return view('fragments.category.index', $data);
     }
-    
-   
 
     /**
      * Show the form for creating a new resource.
@@ -32,7 +32,8 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        return view('fragments.category.create');
+        $catalogs = Catalog::select(['id_catalog','name'])->get();
+        return view('fragments.category.create', ['catalogs' => $catalogs]);
     }
 
     /**
@@ -46,22 +47,18 @@ class CategoryController extends Controller
         //
         $validated = $request->validate([
             'name' => 'required',
-            'image_path' => 'required|max:10000|mimes:jpeg,png,jpg',
+            'catalog_id' => 'required',
         ]);
 
         if($validated)
         {
             $dataCategory = request()->except('_token');
-            if($request->hasFile('image_path')){
-                $dataCategory['image_path']=$request->file('image_path')->store('uploads', ['disk' => 'public']);
-            }
+            
             Category::insert($dataCategory);
             //return response()->json($dataCategory);
             return redirect('category/')->with('success', 'Se ha guardado el objeto.');
         }
         return redirect()->back()->withErrors($validated)->withInput();
-
-       
         
     }
 
@@ -74,9 +71,6 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
-        $data['categories']=Category::all();
-        //Acceder vista
-        return view('fragments.category.user_category', $data);
     }
 
     /**
@@ -89,8 +83,9 @@ class CategoryController extends Controller
     {
         //
         $category=Category::findOrFail($id_category);
+        $catalogs = Catalog::select(['id_catalog','name'])->get();
 
-        return view('fragments.category.edit', compact('category'));
+        return view('fragments.category.edit', compact('category'), compact('catalogs'));
     }
 
     /**
@@ -105,17 +100,14 @@ class CategoryController extends Controller
         //
         $validated = $request->validate([
             'name' => 'required',
-            'image_path' => 'required|max:10000|mimes:jpeg,png,jpg',
+            'catalog_id' => 'required',
         ]);
         if($validated)
         {
             $dataCategory = request()->except(['_token', '_method']); 
-
-            if($request->hasFile('image_path')){
-                $category=Category::findOrFail($id_category);
-                Storage::delete( 'public/'.$category->image_path);
-                $dataCategory['image_path']=$request->file('image_path')->store('uploads', ['disk' => 'public']);
-            }
+            $category=Category::findOrFail($id_category);
+                
+            
 
             Category::where('id_category', '=', $id_category)->update($dataCategory);
             
@@ -125,6 +117,7 @@ class CategoryController extends Controller
             return redirect('category/'.$category->id_category.'/edit')->with('success','El objeto fue editado correctamente.');
         }
         return redirect()->back()->withErrors($validated)->withInput();
+
     }
 
     /**
@@ -137,11 +130,7 @@ class CategoryController extends Controller
     {
         //
         $category=Category::findOrFail($id_category);
-        if(Storage::delete( 'public/'.$category->image_path)){
-            Category::destroy($id_category);
-
-        }
-        
+        Category::destroy($id_category);
         return redirect('category/')->with('success', 'Se ha borrado el objeto');
     }
 }
