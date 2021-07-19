@@ -70,7 +70,7 @@
                                 <i class="icon-bars"></i>
                             </button>
                             
-                            <a href="index.html" class="logo">
+                            <a href="/" class="logo">
                                 <img src="{{ asset('images/demos/demo-4/logo.png') }}" alt="Molla Logo" width="105" height="25">
                             </a>
                         </div><!-- End .header-left -->
