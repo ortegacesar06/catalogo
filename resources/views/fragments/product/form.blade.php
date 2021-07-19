@@ -1,5 +1,6 @@
 
     <div class="form-floating mb-3">
+        <label for="firstname_input">Nombre</label>
         <input 
             type="text" 
             name="name" 
@@ -8,7 +9,6 @@
             placeholder="Nombre"
             value="{{ isset($product->name)?$product->name:old('name') }}"
         >
-        <label for="firstname_input">Nombre</label>
         @error('name')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -17,6 +17,7 @@
        
     </div>
     <div class="form-floating mb-3">
+        <label for="description_input">Descripción</label>
         <input 
             type="text" 
             name="description" 
@@ -25,7 +26,6 @@
             placeholder="Descripción"
             value="{{ isset($product->description)?$product->description:old('description') }}"
         >
-        <label for="description_input">Descripción</label>
         @error('description')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -34,6 +34,7 @@
        
     </div>
     <div class="form-floating mb-3">
+        <label for="stock_input">Stock</label>
         <input 
             type="text" 
             name="stock" 
@@ -42,7 +43,6 @@
             placeholder="Stock"
             value="{{ isset($product->stock)?$product->stock:old('stock') }}"
         >
-        <label for="stock_input">Stock</label>
         @error('stock')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -51,6 +51,7 @@
        
     </div>
     <div class="form-floating mb-3">
+        <label for="price_input">Precio</label>
         <input 
             type="text" 
             name="price" 
@@ -59,7 +60,6 @@
             placeholder="Precio"
             value="{{ isset($product->price)?$product->price:old('price') }}"
         >
-        <label for="price_input">Precio</label>
         @error('price')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -93,7 +93,4 @@
         @enderror
     </div>
 
-    <div class="d-grid gap-2">
-        <button class="btn btn-primary" type="submit">Guardar datos</button>
-        <a href="{{ url('product/create')}}" class="btn btn-secondary">Regresar</a>
-    </div>
+    <button class="btn btn-primary btn-block" type="submit">Guardar datos</button>

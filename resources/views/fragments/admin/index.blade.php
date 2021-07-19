@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 @section('title', 'Principal')
 
 @section('content')
@@ -6,20 +6,19 @@
         <div class="row justify-content-center">
             <div class="col-5 pt-5 pb-5">
                 <div class="card">
-                    <div class="card-body px-5 py-5">
-                        <h4 class="mb-4">Bienvenido</h4>
+                    <div class="card-body">
+                        <h4 class="mb-4">Menú principal</h4>
                         <p class="mb-0"><b>Usuario:</b> {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</p>
-                        <p class="mb-0"><b>Correo:</b> {{ Auth::user()->email }}</p>
-                        <p class="mb-4"><b>Rol:</b> {{ Auth::user()->role->name }}</p>
+                        <p class="mb-4"><b>Correo:</b> {{ Auth::user()->email }}</p>
 
+                        <a href="/admin/perfil" class="btn btn-outline-primary btn-block mb-1 pt-2 pb-2 text-uppercase"><span>Mi Perfil</span> <i class="icon-long-arrow-right"></i></a>
+                        <a href="/catalog" class="btn btn-outline-primary btn-block mb-1 pt-2 pb-2 text-uppercase"><span>Catálogos</span> <i class="icon-long-arrow-right"></i></a>
+                        <a href="/category" class="btn btn-outline-primary btn-block mb-1 pt-2 pb-2 text-uppercase"><span>Categorías</span> <i class="icon-long-arrow-right"></i></a>
+                        <a href="/productos" class="btn btn-outline-primary btn-block mb-1 pt-2 pb-2 text-uppercase"><span>Productos</span> <i class="icon-long-arrow-right"></i></a>
+                        <a href="/admin/users" class="btn btn-outline-primary btn-block mb-1 pt-2 pb-2 text-uppercase"><span>Usuarios</span> <i class="icon-long-arrow-right"></i></a>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
-                            <div class="d-grid gap-2">
-                                <a href="/perfil" class="btn btn-primary">Mi Perfil</a>
-                            </div>
-                            <div class="d-grid gap-2 mt-1">
-                                <button class="btn btn-danger" type="submit">Cerrar sesión</button>
-                            </div>
+                            <button class="btn btn-danger btn-block" type="submit">Cerrar sesión</button>
                         </form>
                     </div>
                 </div>

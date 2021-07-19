@@ -3,7 +3,7 @@
 @endphp
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -333,62 +333,81 @@
                             <div class="form-tab">
                                 <ul class="nav nav-pills nav-fill nav-border-anim" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
+                                        <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Ingresar</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                                        <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Registrarse</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content" id="tab-content-5">
                                     <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
-                                        <form action="#">
+                                        <form action="{{ route('login') }}" method="POST">
+                                            @csrf
                                             <div class="form-group">
-                                                <label for="singin-email">Username or email address *</label>
-                                                <input type="text" class="form-control" id="singin-email" name="singin-email" required>
+                                                <label for="singin-email">Correo electrónico *</label>
+                                                <input type="text" class="form-control" id="singin-email" name="email" required>
                                             </div><!-- End .form-group -->
 
                                             <div class="form-group">
-                                                <label for="singin-password">Password *</label>
-                                                <input type="password" class="form-control" id="singin-password" name="singin-password" required>
+                                                <label for="singin-password">Contraseña *</label>
+                                                <input type="password" class="form-control" id="singin-password" name="password" required>
                                             </div><!-- End .form-group -->
 
                                             <div class="form-footer">
                                                 <button type="submit" class="btn btn-outline-primary-2">
-                                                    <span>LOG IN</span>
+                                                    <span>INGRESAR</span>
                                                     <i class="icon-long-arrow-right"></i>
                                                 </button>
-
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="signin-remember">
-                                                    <label class="custom-control-label" for="signin-remember">Remember Me</label>
-                                                </div><!-- End .custom-checkbox -->
-
-                                                <a href="#" class="forgot-link">Forgot Your Password?</a>
                                             </div><!-- End .form-footer -->
                                         </form>
                                     </div><!-- .End .tab-pane -->
                                     <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                        <form action="#">
+                                        <form action="{{ route('register') }}" method="POST">
                                             <div class="form-group">
-                                                <label for="register-email">Your email address *</label>
-                                                <input type="email" class="form-control" id="register-email" name="register-email" required>
+                                                <label for="register-dni">Cédula *</label>
+                                                <input type="text" class="form-control" id="register-dni" name="dni" required>
                                             </div><!-- End .form-group -->
 
                                             <div class="form-group">
-                                                <label for="register-password">Password *</label>
-                                                <input type="password" class="form-control" id="register-password" name="register-password" required>
+                                                <label for="register-firstname">Nombres *</label>
+                                                <input type="text" class="form-control" id="register-firstname" name="firstname" required>
+                                            </div><!-- End .form-group -->
+
+                                            <div class="form-group">
+                                                <label for="register-lastname">Apellidos *</label>
+                                                <input type="text" class="form-control" id="register-lastname" name="lastname" required>
+                                            </div><!-- End .form-group -->
+
+                                            <div class="form-group">
+                                                <label for="register-address">Dirección *</label>
+                                                <input type="text" class="form-control" id="register-address" name="address" required>
+                                            </div><!-- End .form-group -->
+
+                                            <div class="form-group">
+                                                <label for="register-phone">Teléfono *</label>
+                                                <input type="text" class="form-control" id="register-phone" name="phone" required>
+                                            </div><!-- End .form-group -->
+
+                                            <div class="form-group">
+                                                <label for="register-email">Correo electrónico *</label>
+                                                <input type="email" class="form-control" id="register-email" name="email" required>
+                                            </div><!-- End .form-group -->
+
+                                            <div class="form-group">
+                                                <label for="register-password">Contraseña *</label>
+                                                <input type="password" class="form-control" id="register-password" name="password" required>
+                                            </div><!-- End .form-group -->
+
+                                            <div class="form-group">
+                                                <label for="register-c-password">Confirmar contraseña *</label>
+                                                <input type="password" class="form-control" id="register-c-password" name="confirm_password" required>
                                             </div><!-- End .form-group -->
 
                                             <div class="form-footer">
                                                 <button type="submit" class="btn btn-outline-primary-2">
-                                                    <span>SIGN UP</span>
+                                                    <span>REGISTRARSE</span>
                                                     <i class="icon-long-arrow-right"></i>
                                                 </button>
-
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="register-policy" required>
-                                                    <label class="custom-control-label" for="register-policy">I agree to the <a href="#">privacy policy</a> *</label>
-                                                </div><!-- End .custom-checkbox -->
                                             </div><!-- End .form-footer -->
                                         </form>
                                     </div><!-- .End .tab-pane -->

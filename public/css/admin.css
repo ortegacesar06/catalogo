@@ -1,0 +1,11 @@
+.card{
+    border: .1rem solid #ebebeb;
+}
+.card .card-body{
+    padding: 50px 60px;
+}
+.table .thead-light th,
+.table .thead-light td,
+.table tbody td{
+    padding: 15px 25px !important;
+}

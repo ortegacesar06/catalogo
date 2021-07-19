@@ -32,7 +32,6 @@ Route::get('/contacto', [ShopController::class, 'contact']);
 
 // RUTAS DE LAS VISTAS DE AUTENTICACION
 Route::get('/login', [LoginController::class, 'showLogin']);
-Route::get('/registro', [LoginController::class, 'showRegister']);
 
 // RUTAS DE AUTENTICACION
 Route::prefix('/auth')->group(function(){
@@ -53,12 +52,33 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit-user/{id_user}', [UserController::class,'showEditUser']);
         Route::put('/update-user/{id_user}', [UserController::class, 'updateUser']);
         Route::put('/update-password/{id_user}',[UserController::class, 'updatePassword']);
-        Route::delete('delete/{id_user}', [UserController::class, 'destroyUser']);
-    });
-});
+        Route::delete('delete/{id_user}', [UserController::class, 'destroyUser']);        
 
-Route::get('/perfil',function() {
-    return view('fragments.profile.profile');
+        Route::get('/perfil',function() {
+            return view('fragments.profile.profile');
+        });
+    });
+
+    // RUTAS DE PRODUCTOS
+    Route::prefix('/productos')->group(function() {
+        // RUTAS DE VISTAS
+        Route::get('/crear', [ProductController::class, 'create']);
+        Route::get('/', [ProductController::class, 'index']);
+    
+        Route::get('{id_product}/editP', [ProductController::class, 'edit']);
+        Route::patch('/{id_product}', [ProductController::class, 'update']);
+        //Route::post('/listUser', [ProductController::class, 'destroy']);
+        Route::delete('/{id_product}', [ProductController::class, 'destroy']);
+        // RUTAS DE FUNCIONES
+        Route::post('/save', [ProductController::class, 'store'])->name('save_products');
+    });
+    
+    // RUTAS DE Categoria
+    Route::resource('category', CategoryController::class);
+    
+
+    // RUTAS DE Catalogo
+    Route::resource('catalog', CatalogController::class);
 });
 
 // RUTAS DE PRUEBA
@@ -70,33 +90,6 @@ Route::prefix('/roles')->group(function() {
 
     // RUTAS DE FUNCIONES
     Route::post('/save', [RoleController::class, 'store'])->name('save_roles');
-});
-
-// RUTAS DE PRODUCTOS
-Route::prefix('/productos')->group(function() {
-    // RUTAS DE VISTAS
-    Route::get('/crear', [ProductController::class, 'create']);
-
-    Route::get('/user', [ProductController::class, 'show']);
-
-    Route::get('/', [ProductController::class, 'index']);
-
-    Route::get('{id_product}/editP', [ProductController::class, 'edit']);
-    Route::patch('/{id_product}', [ProductController::class, 'update']);
-    //Route::post('/listUser', [ProductController::class, 'destroy']);
-    Route::delete('/{id_product}', [ProductController::class, 'destroy']);
-    // RUTAS DE FUNCIONES
-    Route::post('/save', [ProductController::class, 'store'])->name('save_products');
-});
-
-// RUTAS DE Categoria
-Route::resource('category', CategoryController::class);
-
-// RUTAS DE Catalogo
-Route::resource('catalog', CatalogController::class);
-Route::prefix('/catalogs')->group(function() {
-
-    Route::get('/user', [CatalogController::class, 'show'])->name('user_catalog');
 });
 
 Route::prefix('/cart')->group(function() {
