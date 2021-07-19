@@ -15,7 +15,8 @@ class Catalog extends Model
         'image_path',
     ];
 
-
-
-
+    public function categories()
+    {
+        return $this->hasMany(Category::class, 'catalog_id');
+    }
 }

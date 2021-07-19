@@ -17,7 +17,13 @@ class Category extends Model
         
     ];
 
+    public function catalog()
+    {
+        return $this->belongsTo(Catalog::class, 'catalog_id');
+    }    
 
-
-
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id');
+    }
 }
