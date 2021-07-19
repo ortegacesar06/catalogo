@@ -1,3 +1,7 @@
+@php
+    $menu_catalogs = App\Models\Catalog::orderByDesc('id_catalog')->limit(7)->get();
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -30,6 +34,7 @@
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
             <link rel="stylesheet" href="{{ asset('css/skins/skin-demo-4.css') }}">
             <link rel="stylesheet" href="{{ asset('css/demos/demo-4.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
             @yield('styles')
     </head>
 
@@ -84,16 +89,6 @@
                         </div>
 
                         <div class="header-right">
-                            <!--<div class="wishlist">
-                                <a href="wishlist.html" title="Wishlist">
-                                    <div class="icon">
-                                        <i class="icon-heart-o"></i>
-                                        <span class="wishlist-count badge">3</span>
-                                    </div>
-                                    <p>Lista de deseos</p>
-                                </a>
-                            </div>--><!-- End .compare-dropdown -->
-
                             <div class="dropdown cart-dropdown">
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                                     <div class="icon">
@@ -153,8 +148,8 @@
                                     </div><!-- End .dropdown-cart-total -->
 
                                     <div class="dropdown-cart-action">
-                                        <a href="cart.html" class="btn btn-primary">Ver carrito</a>
-                                        <a href="checkout.html" class="btn btn-outline-primary-2"><span>Comprar</span><i class="icon-long-arrow-right"></i></a>
+                                        <a href="/carrito" class="btn btn-primary">Ver carrito</a>
+                                        <a href="#" class="btn btn-outline-primary-2"><span>Comprar</span><i class="icon-long-arrow-right"></i></a>
                                     </div><!-- End .dropdown-cart-total -->
                                 </div><!-- End .dropdown-menu -->
                             </div><!-- End .cart-dropdown -->
@@ -173,11 +168,9 @@
                                 <div class="dropdown-menu">
                                     <nav class="side-nav">
                                         <ul class="menu-vertical sf-arrows">
-                                            <li class="item-lead"><a href="#">Catálogo 1</a></li>
-                                            <li class="item-lead"><a href="#">Catálogo 2</a></li>
-                                            <li><a href="#">Catálogo 3</a></li>
-                                            <li><a href="#">Catálogo 4</a></li>
-                                            <li><a href="#">Catálogo 5</a></li>
+                                            @foreach ($menu_catalogs as $item)
+                                                <li><a href="{{ route('shop.catalog', ['catalog' => $item->id_catalog]) }}">{{ $item->name }}</a></li>                                                
+                                            @endforeach
                                         </ul><!-- End .menu-vertical -->
                                     </nav><!-- End .side-nav -->
                                 </div><!-- End .dropdown-menu -->
@@ -187,17 +180,14 @@
                         <div class="header-center">
                             <nav class="main-nav">
                                 <ul class="menu sf-arrows">
-                                    <li class="megamenu-container active">
-                                        <a href="#">Inicio</a>
+                                    <li class="{{ request()->is('/') ? 'active':'' }}">
+                                        <a href="/">Inicio</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Catálogo</a>
+                                    <li class="{{ request()->is('catalogo') ? 'active':'' }}">
+                                        <a href="/catalogo">Catálogo</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Pedidos</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Contacto</a>
+                                    <li class="{{ request()->is('contacto') ? 'active':'' }}">
+                                        <a href="/contacto">Contacto</a>
                                     </li>
                                 </ul><!-- End .menu -->
                             </nav><!-- End .main-nav -->
@@ -236,10 +226,10 @@
                                     <h4 class="widget-title">Redes sociales</h4><!-- End .widget-title -->
 
                                     <ul class="widget-list">
-                                        <li><a href="#">Facebook</a></li>
-                                        <li><a href="#">Twitter</a></li>
-                                        <li><a href="#">Instagram</a></li>
-                                        <li><a href="#">Youtube</a></li>
+                                        <li><a href="https://www.facebook.com/">Facebook</a></li>
+                                        <li><a href="https://twitter.com/">Twitter</a></li>
+                                        <li><a href="https://www.instagram.com/">Instagram</a></li>
+                                        <li><a href="https://www.youtube.com/">Youtube</a></li>
                                     </ul><!-- End .widget-list -->
                                 </div><!-- End .widget -->
                             </div><!-- End .col-sm-6 col-lg-3 -->
@@ -249,9 +239,9 @@
                                     <h4 class="widget-title">Menu</h4><!-- End .widget-title -->
 
                                     <ul class="widget-list">
-                                        <li><a href="#">Inicio</a></li>
-                                        <li><a href="#">Catalogo</a></li>
-                                        <li><a href="#">Contacto</a></li>
+                                        <li><a href="/">Inicio</a></li>
+                                        <li><a href="/catalogo">Catalogo</a></li>
+                                        <li><a href="/contacto">Contacto</a></li>
                                         <li><a href="#">Pedidos</a></li>
                                     </ul><!-- End .widget-list -->
                                 </div><!-- End .widget -->
@@ -259,13 +249,13 @@
 
                             <div class="col-sm-6 col-lg-3">
                                 <div class="widget">
-                                    <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+                                    <h4 class="widget-title">Mi cuenta</h4><!-- End .widget-title -->
 
                                     <ul class="widget-list">
-                                        <li><a href="#">Ingresar</a></li>
-                                        <li><a href="cart.html">Ver carrito</a></li>
-                                        <li><a href="cart.html">Mis pedidos</a></li>
-                                        <li><a href="cart.html">Mis compras</a></li>
+                                        <li><a href="/login">Ingresar</a></li>
+                                        <li><a href="/carrito">Ver carrito</a></li>
+                                        <li><a href="#">Mis pedidos</a></li>
+                                        <li><a href="#">Mis compras</a></li>
                                         <li><a href="#">Ayuda</a></li>
                                     </ul><!-- End .widget-list -->
                                 </div><!-- End .widget -->
@@ -313,17 +303,14 @@
                     <div class="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel" aria-labelledby="mobile-menu-link">
                         <nav class="mobile-nav">
                             <ul class="mobile-menu">
-                                <li class="active">
-                                    <a href="#">Inicio</a>
+                                <li class="{{ request()->is('/') ? 'active':'' }}">
+                                    <a href="/">Inicio</a>
                                 </li>
-                                <li>
-                                    <a href="#">Catalogo</a>
+                                <li class="{{ request()->is('/catalogo') ? 'active':'' }}">
+                                    <a href="/catalogo">Catalogo</a>
                                 </li>
-                                <li>
-                                    <a href="#">Pedidos</a>
-                                </li>
-                                <li>
-                                    <a href="#">Contacto</a>
+                                <li class="{{ request()->is('/contacto') ? 'active':'' }}">
+                                    <a href="/contacto">Contacto</a>
                                 </li>
                             </ul>
                         </nav><!-- End .mobile-nav -->
@@ -331,11 +318,9 @@
                     <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
                         <nav class="mobile-cats-nav">
                             <ul class="mobile-cats-menu">
-                                <li><a class="mobile-cats-lead" href="#">Catalogo 1</a></li>
-                                <li><a class="mobile-cats-lead" href="#">Catalogo 2</a></li>
-                                <li><a href="#">Catalogo 3</a></li>
-                                <li><a href="#">Catalogo 4</a></li>
-                                <li><a href="#">Catalogo 5</a></li>
+                                @foreach ($menu_catalogs as $item)
+                                    <li><a href="{{ route('shop.catalog', ['catalog' => $item->id_catalog]) }}">{{ $item->name }}</a></li>                                    
+                                @endforeach
                             </ul><!-- End .mobile-cats-menu -->
                         </nav><!-- End .mobile-cats-nav -->
                     </div><!-- .End .tab-pane -->

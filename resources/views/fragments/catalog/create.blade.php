@@ -11,13 +11,7 @@
                         <form action="{{ route('catalog.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @include('fragments.catalog.form',['modo'=>'Registrar'])
-                            
-                            
-                            
                         </form>
-
-
-
                     </div>
                 </div>
             </div>

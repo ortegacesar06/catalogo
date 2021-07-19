@@ -27,7 +27,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::select(['id_category','name'])->get();
+        $categories = Category::select(['id_category','name','catalog_id'])->get();
         return view('fragments.product.create', ['categories' => $categories]);
     }
 
@@ -47,7 +47,7 @@ class ProductController extends Controller
 
         $product->category_id = $request->category;
         
-        $path = $request->file('imagenProducto')->store('uploads',['disk'=>'public']);
+        $path = $request->file('image_path')->store('uploads',['disk'=>'public']);
         $product->image_path = $path;
 
         $product->save();
@@ -77,7 +77,7 @@ class ProductController extends Controller
     public function edit($id_product)
     {
         $product=Product::where('id_product','=',$id_product)->firstOrFail();
-        $categories = Category::select(['id_category','name'])->get();
+        $categories = Category::select(['id_category','name','catalog_id'])->get();
 
         return view('fragments.product.editP', ['product' => $product, 'categories' => $categories]);
     }

@@ -15,8 +15,8 @@
         @enderror
     </div>
     
-    <div class="form-floating mb-3">
-        <label for="formFileLg" class="form-label">Imagen</label>
+    <div class="form-group mb-3">
+        <label for="image_path" class="form-label">Imagen</label>
         <br>
         <input 
             class="form-control @error('image_path') is-invalid @enderror" 

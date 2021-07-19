@@ -8,6 +8,8 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 
+use App\Http\Controllers\ShopController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,24 +22,12 @@ use App\Http\Controllers\ProductController;
 */
 
 // RUTAS DEL CATÁLOGO
-Route::get('/', function () {
-    return view('fragments.shop.index');
-});
-Route::get('/producto', function () {
-    return view('fragments.shop.product');
-});
-Route::get('/catalogo', function () {
-    return view('fragments.shop.catalogue');
-});
-Route::get('/catalogo/productos', function () {
-    return view('fragments.shop.productos');
-});
-Route::get('/carrito', function () {
-    return view('fragments.shop.cart');
-});
-Route::get('/contacto', function () {
-    return view('fragments.shop.contact');
-});
+Route::get('/', [ShopController::class, 'index']);
+Route::get('/catalogo', [ShopController::class, 'catalogue']);
+Route::get('/catalogo/{catalog}/productos', [ShopController::class, 'products'])->name('shop.catalog');
+Route::get('/catalogo/productos/{id}', [ShopController::class, 'single'])->name('shop.single');
+Route::get('/carrito', [ShopController::class, 'cart']);
+Route::get('/contacto', [ShopController::class, 'contact']);
 
 // RUTAS DE LAS VISTAS DE AUTENTICACION
 Route::get('/login', [LoginController::class, 'showLogin']);
@@ -100,20 +90,6 @@ Route::prefix('/productos')->group(function() {
 
 // RUTAS DE Categoria
 Route::resource('category', CategoryController::class);
-
-
-
-/*Route::prefix('/category')->group(function() {
-    // RUTAS DE VISTAS
-    Route::get('/', [CategoryController::class, 'index'])->name('home');
-    Route::get('/crear', function(){
-        return view('fragments.category.create');
-    });
-
-    // RUTAS DE FUNCIONES
-    Route::post('/save', [CategoryController::class, 'store'])->name('save_category');
-}); */
-
 
 // RUTAS DE Catalogo
 Route::resource('catalog', CatalogController::class);

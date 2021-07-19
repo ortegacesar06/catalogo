@@ -6,7 +6,7 @@
         
                 <h2 class="section-heading text-uppercase text-center">Lista de Productos</h2>
 
-                <a href="/productos/crear" class="btn btn-primary">Crear Nueva Categoría</a>
+                <a href="/productos/crear" class="btn btn-primary mb-3">Crear producto</a>
         
                 <table class="table table-light">
                     <thead class="thead-light">
