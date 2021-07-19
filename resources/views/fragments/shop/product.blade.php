@@ -41,7 +41,7 @@
                             </div><!-- End .product-content -->
 
                             <div class="product-details-action">
-                                <a href="#" class="btn-product btn-cart"><span>Añadir al carrito</span></a>
+                                <a href="{{ route('cart.add', ['id' => $product->id_product]) }}" class="btn-product btn-cart"><span>Añadir al carrito</span></a>
                             </div><!-- End .product-details-action -->
 
                             <div class="product-details-footer">

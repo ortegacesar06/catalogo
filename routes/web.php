@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,4 +97,10 @@ Route::resource('catalog', CatalogController::class);
 Route::prefix('/catalogs')->group(function() {
 
     Route::get('/user', [CatalogController::class, 'show'])->name('user_catalog');
+});
+
+Route::prefix('/cart')->group(function() {
+    Route::get('/add/{id}', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/remove/{row}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/update', [CartController::class, 'updateCart'])->name('cart.update');
 });

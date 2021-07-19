@@ -82,20 +82,16 @@
                     @foreach ($new_products as $product)
                         <div class="product product-2">
                             <figure class="product-media">
-                                <a href="#">
+                                <a href="{{ route('shop.single', ['id' => $product->id_product]) }}">
                                     <img src="/storage/{{ $product->image_path }}" alt="Product image" class="product-image">
                                 </a>
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart" title="Add to cart"><span>añadir al carrito</span></a>
-                                </div><!-- End .product-action -->
                             </figure><!-- End .product-media -->
 
                             <div class="product-body">
                                 <div class="product-cat">
-                                    <a href="#">{{ $product->category->catalog->name }} - {{ $product->category->name }}</a>
+                                    <a href="{{ route('shop.catalog', ['catalog' => $catalog->id_catalog, 'category' => $product->category->id_category]) }}">{{ $product->category->catalog->name }} - {{ $product->category->name }}</a>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">{{ $product->name }}</a></h3><!-- End .product-title -->
+                                <h3 class="product-title"><a href="{{ route('shop.single', ['id' => $product->id_product]) }}">{{ $product->name }}</a></h3><!-- End .product-title -->
                                 <div class="product-price">
                                     ${{ number_format($product->price, 2) }}
                                 </div><!-- End .product-price -->
