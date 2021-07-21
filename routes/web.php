@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Gate;
+
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -22,12 +24,9 @@ use App\Http\Controllers\CartController;
 |
 */
 
-// RUTAS DEL CATÁLOGO
+// RUTAS DE TIENDA
 Route::get('/', [ShopController::class, 'index']);
 Route::get('/catalogo', [ShopController::class, 'catalogue']);
-Route::get('/catalogo/{catalog}/productos', [ShopController::class, 'products'])->name('shop.catalog');
-Route::get('/catalogo/productos/{id}', [ShopController::class, 'single'])->name('shop.single');
-Route::get('/carrito', [ShopController::class, 'cart']);
 Route::get('/contacto', [ShopController::class, 'contact']);
 
 // RUTAS DE LAS VISTAS DE AUTENTICACION
@@ -44,6 +43,10 @@ Route::middleware(['auth'])->group(function () {
     // RUTAS DEL ADMINISTRADOR
     Route::prefix('/admin')->group(function() {
         Route::get('/', function () {
+            if (!Gate::allows('is-admin')) {
+                return redirect('/')->with('error', '¡Usuario no autorizado!');
+            }
+
             return view('fragments.admin.index');
         });
         //CRUD Usuarios
@@ -55,6 +58,10 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('delete/{id_user}', [UserController::class, 'destroyUser']);        
 
         Route::get('/perfil',function() {
+            if (!Gate::allows('is-admin')) {
+                return redirect('/')->with('error', '¡Usuario no autorizado!');
+            }
+
             return view('fragments.profile.profile');
         });
     });
@@ -79,6 +86,11 @@ Route::middleware(['auth'])->group(function () {
 
     // RUTAS DE Catalogo
     Route::resource('catalog', CatalogController::class);
+
+    // RUTAS DE TIENDA PROTEGIDAS
+    Route::get('/catalogo/{catalog}/productos', [ShopController::class, 'products'])->name('shop.catalog');
+    Route::get('/catalogo/productos/{id}', [ShopController::class, 'single'])->name('shop.single');
+    Route::get('/carrito', [ShopController::class, 'cart']);
 });
 
 // RUTAS DE PRUEBA
@@ -92,6 +104,7 @@ Route::prefix('/roles')->group(function() {
     Route::post('/save', [RoleController::class, 'store'])->name('save_roles');
 });
 
+// ACCIONES DEL CARRITO
 Route::prefix('/cart')->group(function() {
     Route::get('/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::get('/remove/{row}', [CartController::class, 'remove'])->name('cart.remove');

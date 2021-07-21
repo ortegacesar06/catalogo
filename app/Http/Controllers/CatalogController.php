@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Catalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class CatalogController extends Controller
 {
@@ -15,9 +16,12 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        //
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         //Visualizar información en paginas
-       $data['catalogs'] = Catalog::paginate(10);
+        $data['catalogs'] = Catalog::paginate(10);
         //Acceder vista
         return view('fragments.catalog.index', $data);
     }
@@ -29,7 +33,10 @@ class CatalogController extends Controller
      */
     public function create()
     {
-        //
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         return view('fragments.catalog.create');
     }
 
@@ -68,7 +75,10 @@ class CatalogController extends Controller
      */
     public function show(Catalog $catalog)
     {
-        //
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         $data['catalogs']=Catalog::all();
         //Acceder vista
         return view('fragments.category.user_category', $data);
@@ -82,7 +92,10 @@ class CatalogController extends Controller
      */
     public function edit($id_catalog)
     {
-        //
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+        
         $catalog=Catalog::findOrFail($id_catalog);
 
         return view('fragments.catalog.edit', compact('catalog'));

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Catalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -16,9 +17,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         //Visualizar información en paginas
-       $data['categories'] = Category::paginate(10);
+        $data['categories'] = Category::paginate(10);
        
         //Acceder vista
         return view('fragments.category.index', $data);
@@ -31,7 +35,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         $catalogs = Catalog::select(['id_catalog','name'])->get();
         return view('fragments.category.create', ['catalogs' => $catalogs]);
     }
@@ -81,7 +88,10 @@ class CategoryController extends Controller
      */
     public function edit($id_category)
     {
-        //
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+        
         $category=Category::findOrFail($id_category);
         $catalogs = Catalog::select(['id_catalog','name'])->get();
 

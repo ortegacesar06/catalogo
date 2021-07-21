@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
@@ -16,6 +17,10 @@ class ProductController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         $data['products'] = Product::paginate(10);
         return view('fragments.product.listUser', $data);
     }
@@ -27,6 +32,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         $categories = Category::select(['id_category','name','catalog_id'])->get();
         return view('fragments.product.create', ['categories' => $categories]);
     }
@@ -63,6 +72,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         $data['products']=Product::all();
         //Acceder vista
         return view('fragments.product.userView', $data);
@@ -76,6 +89,10 @@ class ProductController extends Controller
      */
     public function edit($id_product)
     {
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+        
         $product=Product::where('id_product','=',$id_product)->firstOrFail();
         $categories = Category::select(['id_category','name','catalog_id'])->get();
 

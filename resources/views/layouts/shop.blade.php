@@ -49,7 +49,7 @@
         @endif
 
         @if (session('error'))
-            <div class="alert alert-success border-0 rounded-0 bg-success text-white text-center alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger border-0 rounded-0 bg-danger text-white text-center alert-dismissible fade show" role="alert">
                 {{ session('error') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -71,7 +71,21 @@
                                 <li>
                                     <a href="#">Links</a>
                                     <ul>
-                                        <li><a class="pt-1 pb-1" href="#signin-modal" data-toggle="modal">Ingresar / Registrarse</a></li>
+                                        <li>
+                                            @guest
+                                                <a class="pt-1 pb-1" href="#signin-modal" data-toggle="modal">Ingresar / Registrarse</a>                                                
+                                            @endguest
+                                            @auth
+                                                @if (Auth::user()->role->name === "admin")
+                                                    <a class="pt-1 pb-1" href="/admin">Ir al administrador</a>  
+                                                @else
+                                                    <form action="{{ route('logout') }}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm" style="padding: 5px; margin: 8px 0;">Cerrar sesión</button>
+                                                    </form>
+                                                @endif                                                
+                                            @endauth
+                                        </li>
                                     </ul>
                                 </li>
                             </ul><!-- End .top-menu -->

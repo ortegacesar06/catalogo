@@ -30,7 +30,11 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            return redirect('/admin')->with('success', 'Sesion iniciada correctamente.');
+            if(Auth::user()->role->name === "admin"){
+                return redirect('/admin')->with('success', 'Sesion iniciada correctamente.');
+            }else{
+                return redirect('/')->with('success', 'Sesion iniciada correctamente.');
+            }
         }
 
         return redirect('/login')->with('error', 'Las crendeciales son incorrectas.');

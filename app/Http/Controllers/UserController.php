@@ -9,11 +9,16 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
     public function showAddUser()
     {
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         $roles['roles'] = Role::all();
         return view('fragments.auth.register', $roles)
                 ->with('name', 'Agregar Usuario')
@@ -22,12 +27,20 @@ class UserController extends Controller
 
     public function allUsers()
     {
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+
         $accounts['accounts'] = Account::paginate(6);
         return view('fragments.users.users', $accounts);
     }
 
     public function showEditUser($id)
     {
+        if (!Gate::allows('is-admin')) {
+            return redirect('/')->with('error', '¡Usuario no autorizado!');
+        }
+        
         $user = Account::findOrFail($id);
         return view('fragments.users.edit',compact('user'));
     }

@@ -15,7 +15,7 @@
                                 <h4 class="section-heading mb-0">Lista de Catalogos</h4>
                             </div>
                             <div class="col-6 text-right">
-                                <a href="{{ route('catalog.create') }}" class="btn btn-primary">Crear Nueva Catálogo</a>
+                                <a href="{{ route('catalog.create') }}" class="btn btn-primary">Crear Nuevo Catálogo</a>
                             </div>
                         </div>
                 
