@@ -34,6 +34,24 @@
         @yield('styles')
     </head>
     <body>
+        @if (session('success'))
+            <div class="alert alert-success border-0 rounded-0 bg-success text-white text-center alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-success border-0 rounded-0 bg-success text-white text-center alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         <div class="page-wrapper">
             <main>
                 @yield('content')

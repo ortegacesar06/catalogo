@@ -17,7 +17,7 @@ class CatalogController extends Controller
     {
         //
         //Visualizar información en paginas
-       $data['catalogs']=Catalog::all();
+       $data['catalogs'] = Catalog::paginate(10);
         //Acceder vista
         return view('fragments.catalog.index', $data);
     }

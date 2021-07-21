@@ -52,6 +52,8 @@
                                 @endforeach
                             </tbody>
                         </table> 
+                        
+                        {{ $catalogs->links() }}
                     </div>
                 </div>
             </div>

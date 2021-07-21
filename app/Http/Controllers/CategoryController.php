@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         //
         //Visualizar información en paginas
-       $data['categories']=Category::all();
+       $data['categories'] = Category::paginate(10);
        
         //Acceder vista
         return view('fragments.category.index', $data);

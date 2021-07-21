@@ -2,3 +2,7 @@
     background-size: cover;
     background-position: center;
 }
+
+nav .pagination{
+    justify-content: center;
+}

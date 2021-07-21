@@ -25,25 +25,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-9">
-                    <div class="toolbox">
-                        <div class="toolbox-left">
-                            <div class="toolbox-info">
-                                Mostrando <span>9 de 56</span> Productos
-                            </div><!-- End .toolbox-info -->
-                        </div><!-- End .toolbox-left -->
-
-                        <div class="toolbox-right">
-                            <div class="toolbox-sort">
-                                <label for="sortby">Ordenar por:</label>
-                                <div class="select-custom">
-                                    <select name="sortby" id="sortby" class="form-control">
-                                        <option value="popularity" selected="selected">Más Popular</option>
-                                        <option value="date">Fecha</option>
-                                    </select>
-                                </div>
-                            </div><!-- End .toolbox-sort -->
-                        </div><!-- End .toolbox-right -->
-                    </div><!-- End .toolbox -->
 
                     <div class="products mb-3">
                         <div class="row">
@@ -72,27 +53,15 @@
                                     </div><!-- End .product -->
                                 </div><!-- End .col-sm-6 col-lg-4 -->                                
                             @endforeach
+                            @if (count($products) === 0)
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <p class="text-center font-italic pt-4 pb-4" style="width: 100%;">No hay elementos para mostrar.</p>
+                                </div>
+                            @endif
                         </div><!-- End .row -->
                     </div><!-- End .products -->
 
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                                    <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Anterior
-                                </a>
-                            </li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item-total">de 6</li>
-                            <li class="page-item">
-                                <a class="page-link page-link-next" href="#" aria-label="Next">
-                                    Siguiente <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    {{ $products->links() }}
                 </div><!-- End .col-lg-9 -->
                 <aside class="col-lg-3 order-lg-first">
                     <div class="sidebar sidebar-shop">

@@ -48,6 +48,8 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    {{ $accounts->links() }}
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data['products']=Product::all();
+        $data['products'] = Product::paginate(10);
         return view('fragments.product.listUser', $data);
     }
 

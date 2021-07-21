@@ -12,3 +12,7 @@ html, body{
 .table tbody td{
     padding: 15px 25px !important;
 }
+
+nav .pagination{
+    justify-content: center;
+}

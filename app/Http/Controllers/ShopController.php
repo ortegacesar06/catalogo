@@ -34,7 +34,7 @@ class ShopController extends Controller
         $category = $request->input('category');
         
         if(!is_null($category)){
-            $products = Product::where('category_id', '=', $category)->orderByDesc('id_product')->get();
+            $products = Product::where('category_id', '=', $category)->orderByDesc('id_product')->paginate(10);
         }else{
             $categories = $catalog->categories->modelKeys();
 
@@ -43,7 +43,7 @@ class ShopController extends Controller
                 $query = $query->orWhere('category_id', $item);
             }
 
-            $products = $query->get();
+            $products = $query->paginate(10);
         }
 
         return view('fragments.shop.products', [

@@ -39,6 +39,24 @@
     </head>
 
     <body>
+        @if (session('success'))
+            <div class="alert alert-success border-0 rounded-0 bg-success text-white text-center alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-success border-0 rounded-0 bg-success text-white text-center alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        
         <div class="page-wrapper">
             <header class="header header-intro-clearance header-4">
                 <div class="header-top">
@@ -363,6 +381,7 @@
                                     </div><!-- .End .tab-pane -->
                                     <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
                                         <form action="{{ route('register') }}" method="POST">
+                                            @csrf
                                             <div class="form-group">
                                                 <label for="register-dni">Cédula *</label>
                                                 <input type="text" class="form-control" id="register-dni" name="dni" required>
