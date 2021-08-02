@@ -159,13 +159,13 @@ class ProductController extends Controller
         if(Storage::delete( 'public/'.$product->image_path)){
             if($product->delete()){
 
-                return redirect('productos/listUser/')->with('success', 'Se ha borrado el objeto');
+                return redirect('/productos')->with('success', 'Se ha borrado el objeto');
 
             }else{
-                return redirect('productos/listUser/')->with('error', 'No se ha borrado el objeto');
+                return redirect('/productos')->with('error', 'No se ha borrado el objeto');
             }
         }else{
-            return redirect('productos/listUser/')->with('error', 'Error al borrar la imagen del producto.');
+            return redirect('/productos')->with('error', 'Error al borrar la imagen del producto.');
         }
     }
 }
