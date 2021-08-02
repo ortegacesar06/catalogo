@@ -49,9 +49,6 @@
           </div>
           <div class="row justify-content-center">
             <div class="col-6">
-                <a  href="#" class="btn btn-success btn-block pt-1 pb-1">Editar Información</a>
-            </div>
-            <div class="col-6">
                 <a href="/admin" class="btn btn-primary btn-block pt-1 pb-1">Regresar a Inicio</a>
             </div>
           </div>

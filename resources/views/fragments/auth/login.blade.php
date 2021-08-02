@@ -37,11 +37,17 @@
                             </form>
                         </div><!-- .End .tab-pane -->
                         <div class="tab-pane fade" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
-                            <form action="{{ route('register') }}" method="POST">
+                            <form action="{{ route('register') }}" method="post">
                                 @csrf
                                 <div class="form-group">
                                     <label for="register-dni">Cédula *</label>
-                                    <input type="text" class="form-control" id="register-dni" name="dni" required>
+                                    <input type="text" class="form-control @error('dni') is-invalid @enderror" id="register-dni"
+                                     name="dni" required value="{{ old('dni') }}">
+                                    @error('dni')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div><!-- End .form-group -->
 
                                 <div class="form-group">

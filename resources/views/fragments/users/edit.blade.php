@@ -15,7 +15,7 @@
                         @csrf
                         {{ method_field('PUT') }}
                         <div class="form-floating mb-3">
-                            <label for="firstname_input">Cédula</label>
+                            <label for="dni_input">Cédula</label>
                             <input type="text" name="dni" disabled
                                 class="form-control @error('dni') is-invalid @enderror" id="dni_input"
                                 placeholder="Número de Cédula" value="{{ $user->dni }}">

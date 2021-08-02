@@ -48,20 +48,29 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = new Product;
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->stock = $request->stock;
-        $product->price = $request->price;
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'stock' => ' required | numeric',
+            'price' => 'required | numeric',
+        ]);
 
-        $product->category_id = $request->category;
-        
-        $path = $request->file('image_path')->store('uploads',['disk'=>'public']);
-        $product->image_path = $path;
+        if ($validated) {
+            $product = new Product;
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->stock = $request->stock;
+            $product->price = $request->price;
 
-        $product->save();
+            $product->category_id = $request->category;
 
-        return redirect('productos/crear')->with('success', 'El producto se ha creado correctamente.');
+            $path = $request->file('image_path')->store('uploads',['disk'=>'public']);
+            $product->image_path = $path;
+
+            $product->save();
+
+            return redirect('productos/crear')->with('success', 'El producto se ha creado correctamente.');
+        }
     }
 
     /**
@@ -92,7 +101,7 @@ class ProductController extends Controller
         if (!Gate::allows('is-admin')) {
             return redirect('/')->with('error', '¡Usuario no autorizado!');
         }
-        
+
         $product=Product::where('id_product','=',$id_product)->firstOrFail();
         $categories = Category::select(['id_category','name','catalog_id'])->get();
 
@@ -111,15 +120,15 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'stock' => 'required',
-            'price' => 'required',
+            'stock' => 'required | numeric',
+            'price' => 'required | numeric',
             'image_path' => 'required|max:10000|mimes:jpeg,png,jpg,webp',
             'category' => 'required',
         ]);
 
         if($validated)
         {
-            $dataCategory = request()->except(['_token', '_method']); 
+            $dataCategory = request()->except(['_token', '_method']);
             $product= Product::findOrFail($id_product);
 
             if($request->hasFile('image_path')){
@@ -130,7 +139,7 @@ class ProductController extends Controller
             $product->fill($dataCategory);
             $product->save();
 
-            //Product::where('id_product', '=', $id_product)->update($dataCategory);            
+            //Product::where('id_product', '=', $id_product)->update($dataCategory);
             //return view('fragments.category.edit', compact('category'));
 
             return redirect()->back()->with('success','El objeto fue editado correctamente.');
@@ -149,14 +158,14 @@ class ProductController extends Controller
         $product = Product::findOrFail($id_product);
         if(Storage::delete( 'public/'.$product->image_path)){
             if($product->delete()){
-        
+
                 return redirect('productos/listUser/')->with('success', 'Se ha borrado el objeto');
 
-            }else{                
+            }else{
                 return redirect('productos/listUser/')->with('error', 'No se ha borrado el objeto');
             }
         }else{
             return redirect('productos/listUser/')->with('error', 'Error al borrar la imagen del producto.');
-        }        
+        }
     }
 }

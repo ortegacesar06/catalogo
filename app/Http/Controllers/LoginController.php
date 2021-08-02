@@ -55,9 +55,9 @@ class LoginController extends Controller
         $validated = $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
-            'dni' => ' required',
+            'dni' => ' required | numeric',
             'address' => 'required',
-            'phone' => 'required',
+            'phone' => 'required | numeric',
             'email' => 'email:rfc,dns|required|unique:accounts',
             'password' => 'required',
             'confirm_password' => 'required|same:password'
