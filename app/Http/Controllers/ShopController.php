@@ -31,20 +31,24 @@ class ShopController extends Controller
     public function products(Request $request, $catalog)
     {
         $catalog = Catalog::find($catalog);
-        $category = $request->input('category');
         
+        $category = $request->input('category');
+        $search = $request->input('q');
+        
+        $query = Product::orderByDesc('id_product');
+
+        if(!is_null($search)){
+            $query = $query->where('name', 'regexp', $search);
+        }
+
         if(!is_null($category)){
-            $products = Product::where('category_id', '=', $category)->orderByDesc('id_product')->paginate(10);
+            $products = $query->where('category_id', '=', $category);
         }else{
             $categories = $catalog->categories->modelKeys();
-
-            $query = Product::orderByDesc('id_product');
-            foreach ($categories as $item) {
-                $query = $query->orWhere('category_id', $item);
-            }
-
-            $products = $query->paginate(10);
+            $query = $query->whereIn('category_id', $categories);
         }
+
+        $products = $query->paginate(10);
 
         return view('fragments.shop.products', [
             'catalog' => $catalog,
